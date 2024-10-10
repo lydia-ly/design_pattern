@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>观察者模式-Observer</title>
+    <style>
+    .box{
+        display:flex;
+    }
+    .box>div{
+        line-height: 40px;
+        padding: 0 20px;
+        border-right:1px dashed #000;
+    }
+    </style>
+    <script src="./index.js"></script>
+    <script>
+        const subject = new Subject();
+        const observer1 = new Observer('observer1');
+        const observer2 = new Observer('observer2');
+        const add = (observer) => {
+            subject.addObserver(observer)
+        }
+        const send = () => {
+            subject.notify("Hello, world!")
+        }
+        const remove = (observer) => {
+            subject.removeObserver(observer)
+        }
+    </script>
+</head>
+
+<body>
+   <div class="box">
+    <div>
+        <div>被观察者</div>
+        <div>Subject</div>
+        <button onClick="add(observer1)">添加观察者1</button>
+        <button onClick="add(observer2)">添加观察者2</button>
+        <br />
+        <button onClick="remove(observer1)">删除观察者1</button>
+        <button onClick="remove(observer2)">删除观察者2</button>
+        <br />
+        <button onClick="send()">发送消息</button>
+    </div>
+    <div>
+        <div>观察者1</div>
+        <div>Observer1</div>
+        <div id="observer1"></div>
+    </div>
+    <div>
+        <div>观察者2</div>
+        <div>Observer2</div>
+        <div id="observer2"> </div>
+    </div>
+   </div>
+
+</body>
+
+</html>
