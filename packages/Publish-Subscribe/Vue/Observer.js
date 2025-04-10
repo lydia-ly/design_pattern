@@ -1,18 +1,6 @@
-class Vue {
-  constructor(options) {
-    this.$options = options;
-    this.$data = options.data;
-    // 对data选项做响应式处理
-    observer(data);
+import Dep from "./Dep";
 
-    // 代理data到vm上
-    proxy(this);
-    // 执行编译
-    new Compile(options.el, this);
-  }
-}
-
-function observer(obj) {
+export function observer(obj) {
   if (typeof obj !== "object" || obj === null) {
     return;
   }
@@ -22,6 +10,7 @@ function observer(obj) {
 class Observer {
   constructor(value) {
     this.value = value;
+    this.walk(value);
   }
   walk(obj) {
     Object.keys(obj).forEach((key) => {
@@ -37,11 +26,12 @@ function defineReactive(obj, key, val) {
     enumerable: true,
     configurable: true,
     get: function reactiveGetter() {
-      dep.depend();
+      Dep.target && dep.addSub(Dep.target); // Dep.target是Watcher实例
       return val;
     },
     set: function reactiveSetter(newVal) {
       if (newVal === val) return;
+      dep.notify(); // 通知dep执行更新方法
     },
   });
 }

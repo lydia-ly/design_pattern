@@ -38,3 +38,17 @@ class Observer {
     listDiv.innerHTML = html;
   }
 }
+
+// 使用：
+// const subject = new Subject();
+// const observer1 = new Observer('observer1');
+// const observer2 = new Observer('observer2');
+// const add = (observer) => {
+//     subject.addObserver(observer)
+// }
+// const send = () => {
+//     subject.notify("Hello, world!")
+// }
+// const remove = (observer) => {
+//     subject.removeObserver(observer)
+// }

@@ -1,5 +1,5 @@
 // 发布订阅模式 ：消息队列
-class EventEmitter {
+export class EventEmitter {
   events = {};
   // 添加事件到列表中
   on(event, callback) {
@@ -9,10 +9,10 @@ class EventEmitter {
     this.events[event].push(callback);
   }
   // 发布事件
-  emit(event, ...ags) {
+  emit(event, data) {
     if (this.events[event]) {
       this.events[event].forEach((callback) => {
-        callback(...args);
+        callback(data);
       });
     }
   }
@@ -40,11 +40,15 @@ var subscriber = {
   handleEvent: function (data) {
     console.log(data);
   },
+  handleEvent2: function (data) {
+    console.log(22, data);
+  },
 };
 
 const publisher = new EventEmitter();
 // 订阅一个事件
 publisher.on("event1", subscriber.handleEvent);
+publisher.on("event1", subscriber.handleEvent2);
 // 发布事件
 publisher.emit("event1", "Hello, world!");
 
